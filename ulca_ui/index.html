@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel='stylesheet' href='style/style.css'>
+  <script src='https://d3js.org/d3.v6.min.js'></script>
+  <title>Visual Interface</title>
+</head>
+
+<body>
+  <div class='wrapper_main'>
+    <div id='weight_view'>
+      <div class='view_title'>Parameters</div>
+      <div id='tg_weight_svg'></div>
+      <div id='bg_weight_svg'></div>
+      <div id='bw_weight_svg'></div>
+      <div id='ratio_bound_svg'></div>
+    </div>
+    <div id='emb_view'>
+      <div class='view_title'>Embedding Result</div>
+      <svg id='emb_view_legend'></svg>
+      <svg id='emb_view_axis_legend'></svg>
+      <div id='emb_svg'></div>
+    </div>
+    <div id='comp_view'>
+      <div class='view_title'>Components</div>
+      <div id='comps'>
+        <div id='comp_x_svg' class='comp'></div>
+        <div id='comp_y_svg' class='comp'></div>
+      </div>
+      <div id='comp_feat_name_svg'></div>
+      <div id='misc'>
+        <label for='data_names' id='label_data_names'>Load data</label>
+        <select name='data_names' id='data_names'>
+          <option value='-'>-</option>
+        </select>
+        <label for='new_data_name' id='label_new_data_name'>New name:</label>
+        <input type='text' id='new_data_name' value='new data' />
+        <button id='save_button'>Save</button>
+      </div>
+    </div>
+  </div>
+  <script src='script/main.js' type='module'></script>
+</body>
+
+</html>

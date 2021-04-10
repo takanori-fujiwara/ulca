@@ -1,0 +1,217 @@
+html, body {
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  width: 100%;
+  height: 100%;
+  color: #444444;
+}
+
+svg text {
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.wrapper_main {
+  float: left;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  width: 100%;
+  height: 100%;
+}
+
+.view_title {
+  position: absolute;
+  right: 0px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 6px;
+  font-size: 10px;
+  color: #FFFFFF;
+  background-color: #52617B;
+}
+
+#weight_view {
+  float: left;
+  position: relative;
+  width: 220px;
+  height: 97vh;
+  margin-left: 15px;
+  margin-right: 5px;
+  border-style: solid;
+  border-width: thin;
+  border-color: #DDDDDD;
+}
+
+#tg_weight_svg {
+  float: left;
+  width: 100%;
+  height: 28%;
+  margin-bottom: auto;
+}
+
+#bg_weight_svg {
+  float: left;
+  width: 100%;
+  height: 28%;
+  margin-bottom: auto;
+}
+
+#bw_weight_svg {
+  float: left;
+  width: 100%;
+  height: 28%;
+}
+
+#ratio_bound_svg {
+  float: left;
+  width: 100%;
+  height: 15%;
+}
+
+#emb_view {
+  float: left;
+  position: relative;
+  width: 97vh;
+  height: 97vh;
+  border-style: solid;
+  border-width: thin;
+  border-color: #DDDDDD;
+}
+
+#emb_svg {
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+
+#emb_view_legend {
+  position: absolute;
+  width: 70px;
+  height: 130px;
+  left: 2px;
+  top: 2px;
+  z-index: 10;
+}
+
+#emb_view_axis_legend {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  left: 1px;
+  bottom: 1px;
+  z-index: 10;
+  /* border-style: solid; */
+  /* border-width: thin; */
+}
+
+#comp_view {
+  float: left;
+  position: relative;
+  width: 400px;
+  height: 97vh;
+  margin-left: 5px;
+  margin-right: 14px;
+  border-style: solid;
+  border-width: thin;
+  border-color: #DDDDDD;
+}
+
+#comps {
+  float: left;
+  width: 70%;
+  height: 100%;
+}
+
+.comp {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+
+#comp_x_svg {}
+
+#comp_y_svg {}
+
+#comp_feat_name_svg {
+  float: left;
+  width: 30%;
+  height: 100%;
+}
+
+#misc {
+  float: left;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 23px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 10;
+  font-size: 10px;
+  background-color: #f5f5f5;
+}
+
+#label_data_names {
+  float: left;
+  display: flex;
+  align-items: center;
+  width: 50px;
+  height: 100%;
+  z-index: 10;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+#data_names {
+  float: left;
+  margin-top: 3px;
+  margin-left: -3px;
+  width: 70px;
+  height: 16px;
+  z-index: 10;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+#label_new_data_name {
+  float: left;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  width: 60px;
+  height: 100%;
+  z-index: 10;
+  font-size: 10px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+#new_data_name {
+  float: left;
+  margin-top: 3px;
+  margin-left: -7px;
+  width: 70px;
+  height: 11px;
+  z-index: 10;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+#save_button {
+  float: left;
+  margin-top: 3px;
+  margin-left: 3px;
+  width: 40px;
+  height: 17px;
+  z-index: 10;
+  font-size: 10px;
+  cursor: pointer;
+  text-align: center;
+}
