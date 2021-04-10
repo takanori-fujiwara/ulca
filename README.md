@@ -35,7 +35,11 @@ Setup
     `pip3 install .`
 
 ### Usage
-* See the notebooks in the case studies directory.
+* See sample.py or the notebooks in the case studies directory.
+  - To run sample.py from the command line, use -i option:
+
+    `python3 -i sample.py`
+
   - Detailed documentations will be released upon publication.
 
 ******
