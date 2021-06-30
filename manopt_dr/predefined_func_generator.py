@@ -46,8 +46,8 @@ def gen_cost_lda(X, y):
 def gen_cost_cpca(X_tg, X_bg, alpha=None):
     X_tg_c = X_tg - X_tg.mean(axis=0)
     X_bg_c = X_bg - X_bg.mean(axis=0)
-    Cov_tg = X_tg_c.T @ X_tg_c
-    Cov_bg = X_bg_c.T @ X_bg_c
+    Cov_tg = X_tg_c.T @ X_tg_c / X_tg_c.shape[0]
+    Cov_bg = X_bg_c.T @ X_bg_c / X_bg_c.shape[0]
 
     @pymanopt.function.Autograd
     def cost(M):
@@ -68,8 +68,8 @@ def gen_cost_ccpca(X_tg, X_bg, alpha=None):
     X_c = X - X.mean(axis=0)
     X_bg_c = X_bg - X_bg.mean(axis=0)
 
-    Cov_all = X_c.T @ X_c
-    Cov_bg = X_bg_c.T @ X_bg_c
+    Cov_all = X_c.T @ X_c / X_c.shape[0]
+    Cov_bg = X_bg_c.T @ X_bg_c / X_bg_c.shape[0]
 
     @pymanopt.function.Autograd
     def cost(M):
@@ -93,8 +93,8 @@ def gen_cost_ulca(X,
                   Covs={},
                   alpha=None,
                   centering=True,
-                  gamma0=0,
-                  gamma1=0):
+                  gamma0=None,
+                  gamma1=None):
     labels = np.unique(y)
     _Covs = {}
 
@@ -118,8 +118,10 @@ def gen_cost_ulca(X,
             WI = X_c[y == label, :] - X_class_mean[y == label, :]
             # to compute between-cov
             BW = X_class_mean[y == label, :] - all_mean
-            Cov_within = WI.T @ WI
-            Cov_between = BW.T @ BW
+            n = np.sum(y == label)
+
+            Cov_within = WI.T @ WI / n
+            Cov_between = BW.T @ BW / n
             _Covs[label] = {'within': Cov_within, 'between': Cov_between}
     else:
         _Covs = Covs
@@ -140,10 +142,16 @@ def gen_cost_ulca(X,
         w_bg_total += w_bg[label]
         w_bw_total += w_bw[label]
 
-    if w_tg_total + w_bw_total == 0 and gamma0 == 0:
-        gamma0 = 1
-    if w_bg_total == 0 and gamma1 == 0:
-        gamma1 = 1
+    if gamma0 is None:
+        if w_tg_total + w_bw_total == 0:
+            gamma0 = 1
+        else:
+            gamma0 = 0
+    if gamma1 is None:
+        if w_bg_total == 0 and gamma1:
+            gamma1 = 1
+        else:
+            gamma1 = 0
 
     C0 = Cov_within_tg + Cov_between + gamma0 * np.identity(d)
     C1 = Cov_within_bg + gamma1 * np.identity(d)

@@ -19,7 +19,7 @@ ppic = np.load('ppic.npy', allow_pickle=True).flatten()[0]
 ppic2 = np.load('ppic2.npy', allow_pickle=True).flatten()[0]
 mnist = np.load('mnist.npy', allow_pickle=True).flatten()[0]
 
-fig2 = {
+fig1 = {
     'data':
     wine,
     'colors':
@@ -42,7 +42,7 @@ fig2 = {
             'alpha': 0
         }
     }, {
-        'title': 'ULCA (Fig. 2)',
+        'title': 'ULCA (Fig. 1)',
         'dr': ulca,
         'groups': [[0], [1], [2]],
         'params': {
@@ -66,7 +66,7 @@ fig2 = {
     }]
 }
 
-fig3 = {
+fig2 = {
     'data':
     wine,
     'colors':
@@ -89,7 +89,7 @@ fig3 = {
             'alpha': None
         }
     }, {
-        'title': 'ULCA (Fig. 3)',
+        'title': 'ULCA (Fig. 2)',
         'dr': ulca,
         'groups': [[0], [1], [2]],
         'params': {
@@ -113,7 +113,7 @@ fig3 = {
     }]
 }
 
-fig4 = {
+fig3 = {
     'data':
     wine,
     'colors':
@@ -136,7 +136,7 @@ fig4 = {
             'alpha': None
         }
     }, {
-        'title': 'ULCA (Fig. 4)',
+        'title': 'ULCA (Fig. 3)',
         'dr': ulca,
         'groups': [[0], [1], [2]],
         'params': {
@@ -160,7 +160,7 @@ fig4 = {
     }]
 }
 
-fig10a = {
+fig9a = {
     'data':
     ppic,
     'colors':
@@ -183,7 +183,7 @@ fig10a = {
             'alpha': None
         }
     }, {
-        'title': 'ULCA (Fig. 10a)',
+        'title': 'ULCA (Fig. 9a)',
         'dr': ulca,
         'groups': [[0], [1]],
         'params': {
@@ -204,7 +204,7 @@ fig10a = {
     }]
 }
 
-fig10b = {
+fig9b = {
     'data':
     ppic2,
     'colors':
@@ -227,7 +227,7 @@ fig10b = {
             'alpha': None
         }
     }, {
-        'title': 'ULCA (Fig. 10b)',
+        'title': 'ULCA (Fig. 9b)',
         'dr': ulca,
         'groups': [[0], [1], [2]],
         'params': {
@@ -251,7 +251,7 @@ fig10b = {
     }]
 }
 
-fig10c = {
+fig9c = {
     'data':
     ppic2,
     'colors':
@@ -274,31 +274,31 @@ fig10c = {
             'alpha': None
         }
     }, {
-        'title': 'ULCA (Fig. 10c)',
+        'title': 'ULCA (Fig. 9c)',
         'dr': ulca,
         'groups': [[0], [1], [2]],
         'params': {
             'w_tg': {
-                0: 0.1036320301254145,
-                1: 0.08285710596411336,
+                0: 0.038365900514515154,
+                1: 0.03189631955255691,
                 2: 0.6337167203034522
             },
             'w_bg': {
-                0: 0.9156204118817143,
-                1: 0.905759808967022,
+                0: 0.3389743652498261,
+                1: 0.34867744858465005,
                 2: 0.058115068138408006
             },
             'w_bw': {
-                0: 0.6587344065214706,
-                1: 0.06323367081423459,
+                0: 0.24387188666965084,
+                1: 0.024342165313444287,
                 2: 0.9843778233029735
             },
-            'alpha': 0.8938344688343313
+            'alpha': 3.2938344688343313
         }
     }]
 }
 
-fig11a = {
+fig10a = {
     'data':
     mnist,
     'colors':
@@ -324,7 +324,7 @@ fig11a = {
             'alpha': None
         }
     }, {
-        'title': 'ULCA (Fig. 11a)',
+        'title': 'ULCA (Fig. 10a)',
         'dr': ulca,
         'groups': [[0], [6], [9]],
         'params': {
@@ -348,7 +348,7 @@ fig11a = {
     }]
 }
 
-fig11b = {
+fig10b = {
     'data':
     mnist,
     'colors':
@@ -374,7 +374,7 @@ fig11b = {
             'alpha': None
         }
     }, {
-        'title': 'ULCA (Fig. 11b)',
+        'title': 'ULCA (Fig. 10b)',
         'dr': ulca,
         'groups': [[0], [6], [9]],
         'params': {
@@ -398,7 +398,7 @@ fig11b = {
     }]
 }
 
-fig11c = {
+fig10c = {
     'data':
     mnist,
     'colors':
@@ -424,7 +424,7 @@ fig11c = {
             'alpha': None
         }
     }, {
-        'title': 'ULCA (Fig. 11c)',
+        'title': 'ULCA (Fig. 10c)',
         'dr': ulca,
         'groups': [[0], [6], [9]],
         'params': {

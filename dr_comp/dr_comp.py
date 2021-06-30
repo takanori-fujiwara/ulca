@@ -7,11 +7,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from experiment_settings import fig2, fig3, fig4, fig10a, fig10b, fig10c, fig11a, fig11b, fig11c
+from experiment_settings import fig1, fig2, fig3, fig9a, fig9b, fig9c, fig10a, fig10b, fig10c
 
 all_results = []
-# for fig in [fig2, fig3, fig4, fig10a, fig10b, fig10c, fig11a, fig11b, fig11c]:
-for fig in [fig10c]:
+for fig in [fig1, fig2, fig3, fig9a, fig9b, fig9c, fig10a, fig10b, fig10c]:
     results = []
 
     X = fig['data']['X']
