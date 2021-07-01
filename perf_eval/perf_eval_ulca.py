@@ -19,7 +19,7 @@ def run_perf_eval(n=100,
                   n_runs=10,
                   gamma0=1e-3,
                   gamma1=1e-3,
-                  file_prefix='./data/document_vec_',
+                  file_prefix='./document_vec_',
                   return_details=False):
     X = np.load(f'{file_prefix}{d}.npy')
 

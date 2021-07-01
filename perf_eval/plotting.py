@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # import tikzplotlib
 
 # 1. Evaluation of ULCA
-df = pd.read_csv('./output/perf_eval_ucla.csv')
+df = pd.read_csv('./perf_eval_ucla.csv')
 
 manopt_relax = df[df['method'] == 'manopt_ulca'][df['alpha'] != 'auto']
 manopt_strict = df[df['method'] == 'manopt_ulca'][df['alpha'] == 'auto']
@@ -59,7 +59,7 @@ plt.tight_layout()
 plt.show()
 
 # 2. Evaluation of the backward parameter selection
-df = pd.read_csv('./output/perf_eval_backward_n1000.csv')
+df = pd.read_csv('./perf_eval_backward_n1000.csv')
 
 # 2-1. Completion time
 colors = ['#e377c2', '#bcbd22', '#17becf']

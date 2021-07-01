@@ -368,6 +368,14 @@ class Singleton(object):
 
 
 class Plot(Singleton):
+    """Class for calling the ULCA visual interface with a Python script
+    Parameters
+    ----------
+    http_port: int, optional, (default=8000)
+        Port used for HTTP server.
+    ws_port: int, optional, (default=9000)
+        Port used for Websocket server.
+    """
     def __init__(self, http_port=8000, ws_port=9000):
         # use singleton and the condition below to avoid conflict due to
         # usage of the same html server address
@@ -401,6 +409,72 @@ class Plot(Singleton):
                  },
                  weight_opt_max_iter=50,
                  inline_mode=True):
+        """Plot ULCA result.
+        Parameters
+        ----------
+        dr: ULCA instance.
+            ULCA instance after applying fit.
+        X: array-like of shape(n_samples, n_features)
+            X used when applying fit with ULCA.
+        y: array-like of shape (n_samples,)
+            y used when applying fit with ULCA.
+        w_tg: array-like of shape (n_groups,) or dictionary
+            w_tg used when applying fit with ULCA.
+        w_bg: array-like of shape (n_groups,) or dictionary
+            w_bg used when applying fit with ULCA.
+        w_bw: array-like of shape (n_groups,) or dictionary
+            w_bw used when applying fit with ULCA.
+        Covs: dictionary, optional, (default={})
+            Covs used when applying fit with ULCA.
+        alpha: None or float, optional (default=None)
+            alpha used when applying fit with ULCA.
+        max_alpha: float, optional (default=10)
+            maximum value of alpha that can be selected with the slider in UI.
+        feat_names: None or list of strings, optional (default=None)
+            If None, numbers from 0 to n_features are assigned as feature names
+            shown in UI. Otherwise, a list of feature names is used in UI.
+        y_to_name: None or dictionary, optional (default=None)
+            If None, Label_{y_value} is used for each groups's name. Otherwise,
+            Dictionary item corresponding each y value is used as a group name.
+            (e.g., y_to_name={0: 'Group X', 1: 'Group Y'})
+        w_area: dictinary, optional (default {'move': 0.2, 'scale': 0.8})
+            r_a in Eq. 12 when moving ('move') or scaling ('scale') of the
+            confidence ellipse is performed.
+        w_dist: dictinary, optional (default {'move': 0.8, 'scale': 0.2})
+            r_l in Eq. 12 when moving ('move') or scaling ('scale') of the
+            confidence ellipse is performed.
+        weight_opt_max_iter: int, optional (default=50)
+            # of maximum iterations when optimizing Eq. 12.
+        inline_mode: bool, optional (default=True)
+            If True, showing UI with an inline mode (i.e., showing UI in
+            the Jupyter Notebook's output cell using HTML IFrame).
+            Otherwise, showing UI in a new windowin in a browser.
+
+        Returns
+        -------
+        View: IFrame
+
+        Examples
+        -------
+        from sklearn import datasets, preprocessing
+        from ulca.ulca import ULCA
+
+        >>> # prepare data
+        >>> dataset = datasets.load_wine()
+        >>> X = dataset.data
+        >>> y = dataset.target
+        >>> X = preprocessing.scale(X)
+
+        >>> # prepare ULCA and parameters
+        >>> ulca = ULCA(n_components=2)
+
+        >>> w_tg = {0: 0, 1: 0, 2: 0}
+        >>> w_bg = {0: 1, 1: 1, 2: 1}
+        >>> w_bw = {0: 1, 1: 1, 2: 1}
+
+        >>> # apply ULCA
+        >>> ulca = ulca.fit(X, y=y, w_tg=w_tg, w_bg=w_bg, w_bw=w_bw)
+        """
 
         # start html server thread
         class HTTPHandler(SimpleHTTPRequestHandler):
@@ -490,7 +564,38 @@ class Plot(Singleton):
         return view
 
     def current_info(self):
+        """Accessing information the current ULCA result shown in UI.
+
+        Returns
+        -------
+        Info class instance which has below attributes:
+            dr
+            X,
+            y,
+            w_tg,
+            w_bg,
+            w_bw,
+            alpha,
+            max_alpha,
+            Covs,
+            w_area,
+            w_dist,
+            feat_names,
+            y_to_name,
+            weight_opt_max_iter
+        These attributes correspond to parameters used for plot_emb().
+        Attributes related to ULCA optimization (w_tg, w_bg, w_bw, alpha) are
+        updated during the intearctive analysis using UI.
+        """
         return info
 
     def saved_info(self):
+        """Accessing all saved info via saving function in UI.
+        Returns
+        -------
+        Dictionary of Info class instances where key is a name used when saving
+        and item is the corresponding Info class instances.
+        '-' is a specical key used to indicate the current Info.
+        """
+
         return saved_info

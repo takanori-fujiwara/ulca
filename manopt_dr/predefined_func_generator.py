@@ -1,5 +1,17 @@
 import autograd.numpy as np
 import pymanopt
+"""
+Exaples of cost and projection fuctions to generate linear dimensionality
+reduction class with gen_ldr in core.py
+Implemented cost function genertors:
+    - PCA (gen_cost_pca)
+    - LDA (gen_cost_lda)
+    - cPCA (gen_cost_cpca)
+    - ccPCA (gen_cost_ccpca)
+    - ULCA (gen_cost_ulca)
+Implemented projection function genertors:
+    - Matrix multiplication with data and projection matrix (gen_default_proj)
+"""
 
 
 def gen_default_proj(M):
