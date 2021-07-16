@@ -2,9 +2,10 @@
 
 About
 -----
-* ULCA and visual UI that can be directly used from Python and the Jupyter Notebook from: ***Interactive Dimensionality Reduction for Comparative Analysi***.
+* ULCA and visual UI that can be directly used from Python and the Jupyter Notebook from: ***Interactive Dimensionality Reduction for Comparative Analysis***.
 Takanori Fujiwara, Xinhai Wei, Jian Zhao, and Kwan-Liu Ma.
-[arXiv Preprint](https://arxiv.org/abs/2106.15481), 2021.
+IEEE Transactions on Visualization and Computer Graphics and IEEE VIS 2021 (forthcoming).
+[arXiv Preprint](https://arxiv.org/abs/2106.15481)
 
 * Demonstration video: https://takanori-fujiwara.github.io/s/ulca/index.html
 
@@ -13,7 +14,7 @@ Takanori Fujiwara, Xinhai Wei, Jian Zhao, and Kwan-Liu Ma.
 
   * Backward parameter selection of ULCA based on the user-performed changes over the embedding result.
 
-  * Web-based visual user interface that can be directly used from Python and the Jupyte Notebook.
+  * Web-based visual user interface that can be directly used from Python and the Jupyter Notebook.
 
   * Manifold-optimization-based linear dimensionality reduction framework (implementation of the work by Cunningham and Ghahramani, 2015).
 
@@ -62,10 +63,10 @@ Setup
     `python3 -i sample.py`
 
   - Detailed documentations can be found each related source code.
-    (e.g., ulca.py: there are documentations about ULCA. plot.py: ULCA's UI) 
+    (e.g., ulca.py: there are documentations about ULCA. plot.py: ULCA's UI)
 
 ******
 
 ## How to Cite
 Please, cite:    
-Takanori Fujiwara, Xinhai Wei, Jian Zhao, and Kwan-Liu Ma, "Interactive Dimensionality Reduction for Comparative Analysis". arXiv:2106.15481, 2021.
+Takanori Fujiwara, Xinhai Wei, Jian Zhao, and Kwan-Liu Ma, "Interactive Dimensionality Reduction for Comparative Analysis". IEEE Transactions on Visualization and Computer Graphics, forthcoming.
