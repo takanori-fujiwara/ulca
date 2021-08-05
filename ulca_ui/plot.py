@@ -545,7 +545,7 @@ class Plot(Singleton):
         info.w_bg = w_bg
         info.w_bw = w_bw
         info.alpha = alpha
-        info.max_alpha = max_alpha
+        info.max_alpha = max_alpha if max_alpha < alpha else alpha
         info.Covs = Covs
         info.w_area = w_area
         info.w_dist = w_dist
