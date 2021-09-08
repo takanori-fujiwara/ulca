@@ -146,7 +146,7 @@ def gen_ldr(cost_func_generator,
             self.problem.verbosity = self.verbosity
             self.M = self.solver.solve(self.problem)
 
-            if self.apply_varimax:
+            if self.apply_varimax and self.n_components > 1:
                 self.M = Rotator(method='varimax').fit_transform(self.M)
             if self.apply_consist_axes:
                 # consist sign (column sum will be pos)

@@ -257,7 +257,7 @@ class EVDULCA:
 
         if self.alpha:
             self.M = self._apply_evd(C0, C1, self.alpha)
-            if self.apply_varimax:
+            if self.apply_varimax and self.n_components > 1:
                 self.M = Rotator(method='varimax').fit_transform(self.M)
         else:
             self.alpha = 0
@@ -276,7 +276,7 @@ class EVDULCA:
                 if improved_ratio < convergence_ratio:
                     break
 
-            if self.apply_varimax:
+            if self.apply_varimax and self.n_components > 1:
                 self.M = Rotator(method='varimax').fit_transform(self.M)
             if self.apply_consist_axes:
                 # consist sign (column sum will be pos)
