@@ -55,6 +55,29 @@ def gen_cost_lda(X, y):
     return cost
 
 
+def gen_cost_regularized_lda(X, y, gamma=0):
+    X_c = X - X.mean(axis=0)
+
+    all_mean = X_c.mean()  # should be 0
+    class_mean = {}
+    for label in np.unique(y):
+        class_mean[label] = X_c[y == label, :].mean(axis=0)
+
+    X_class_mean = np.zeros(X.shape)
+    for label in np.unique(y):
+        X_class_mean[y == label, :] = class_mean[label]
+
+    Cov_within = (X_c - X_class_mean).T @ (X_c - X_class_mean)
+    Cov_between = (X_class_mean - all_mean).T @ (X_class_mean - all_mean)
+    Cov_between += gamma * np.identity(Cov_between.shape[0])
+
+    @pymanopt.function.Autograd
+    def cost(M):
+        return np.trace(M.T @ Cov_within @ M) / np.trace(M.T @ Cov_between @ M)
+
+    return cost
+
+
 def gen_cost_cpca(X_tg, X_bg, alpha=None):
     X_tg_c = X_tg - X_tg.mean(axis=0)
     X_bg_c = X_bg - X_bg.mean(axis=0)
