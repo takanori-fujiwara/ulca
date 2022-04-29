@@ -37,16 +37,19 @@ Setup
 
 ### Requirements
 * Python3 (latest), pymanopt (https://github.com/pymanopt/pymanopt)
-* Note: Tested on macOS Big Sur and Ubuntu 20.04 LTS with Python 3.9 and Google Chrome.
+* Note: Tested on macOS Big Sur, Ubuntu 20.04 LTS, and Windows 10 with Python 3.9/3.10 and Google Chrome.
 
 ### Setup
-* Install pymanopt from the github repository (DO NOT use pip3 install pymanopt)
+* Install pymanopt from the github repository (<span style="color:#ff8888">DO NOT use pip3 install pymanopt</span>: this pip released ver is quite old.)
 
   * Download/Clone the repository from https://github.com/pymanopt/pymanopt
 
   * Move to the downloaded repository, then:
+    `rm pyproject.toml`
 
-    `pip3 install .`
+    `python3 -m pip install .` or `python -m pip install .`
+
+    * Note: the remove command is used because the installation with pyproject.toml does not work well now.
 
 * Install manopt_dr, ulca, and ulca_ui
 
@@ -60,7 +63,7 @@ Setup
 * See sample.py or the notebooks in the case studies directory.
   - To run sample.py from the command line, use -i option:
 
-    `python3 -i sample.py`
+    `python3 -i sample.py` or `python -i sample.py`
 
   - Detailed documentations can be found each related source code.
     (e.g., ulca.py: there are documentations about ULCA. plot.py: ULCA's UI)

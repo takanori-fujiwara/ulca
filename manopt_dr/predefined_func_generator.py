@@ -15,16 +15,17 @@ Implemented projection function genertors:
 
 
 def gen_default_proj(M):
+
     def proj(X, *args, **kwargs):
         return X @ M
 
     return proj
 
 
-def gen_cost_pca(X):
+def gen_cost_pca(manifold, X):
     X_c = X - X.mean(axis=0)
 
-    @pymanopt.function.Autograd
+    @pymanopt.function.autograd(manifold)
     def cost(M):
         # this is based on Cunningham et al., 2015
         # but probably, using Cov is faster
@@ -33,7 +34,7 @@ def gen_cost_pca(X):
     return cost
 
 
-def gen_cost_lda(X, y):
+def gen_cost_lda(manifold, X, y):
     X_c = X - X.mean(axis=0)
 
     all_mean = X_c.mean()  # should be 0
@@ -48,14 +49,14 @@ def gen_cost_lda(X, y):
     Cov_within = (X_c - X_class_mean).T @ (X_c - X_class_mean)
     Cov_between = (X_class_mean - all_mean).T @ (X_class_mean - all_mean)
 
-    @pymanopt.function.Autograd
+    @pymanopt.function.autograd(manifold)
     def cost(M):
         return np.trace(M.T @ Cov_within @ M) / np.trace(M.T @ Cov_between @ M)
 
     return cost
 
 
-def gen_cost_regularized_lda(X, y, gamma=0):
+def gen_cost_regularized_lda(manifold, X, y, gamma=0):
     X_c = X - X.mean(axis=0)
 
     all_mean = X_c.mean()  # should be 0
@@ -71,24 +72,24 @@ def gen_cost_regularized_lda(X, y, gamma=0):
     Cov_between = (X_class_mean - all_mean).T @ (X_class_mean - all_mean)
     Cov_between += gamma * np.identity(Cov_between.shape[0])
 
-    @pymanopt.function.Autograd
+    @pymanopt.function.autograd(manifold)
     def cost(M):
         return np.trace(M.T @ Cov_within @ M) / np.trace(M.T @ Cov_between @ M)
 
     return cost
 
 
-def gen_cost_cpca(X_tg, X_bg, alpha=None):
+def gen_cost_cpca(manifold, X_tg, X_bg, alpha=None):
     X_tg_c = X_tg - X_tg.mean(axis=0)
     X_bg_c = X_bg - X_bg.mean(axis=0)
     Cov_tg = X_tg_c.T @ X_tg_c / X_tg_c.shape[0]
     Cov_bg = X_bg_c.T @ X_bg_c / X_bg_c.shape[0]
 
-    @pymanopt.function.Autograd
+    @pymanopt.function.autograd(manifold)
     def cost(M):
         return np.trace(M.T @ Cov_bg @ M) / np.trace(M.T @ Cov_tg @ M)
 
-    @pymanopt.function.Autograd
+    @pymanopt.function.autograd(manifold)
     def cost_with_alpha(M):
         return np.trace(M.T @ (alpha * Cov_bg - Cov_tg) @ M)
 
@@ -98,7 +99,7 @@ def gen_cost_cpca(X_tg, X_bg, alpha=None):
         return cost
 
 
-def gen_cost_ccpca(X_tg, X_bg, alpha=None):
+def gen_cost_ccpca(manifold, X_tg, X_bg, alpha=None):
     X = np.vstack((X_tg, X_bg))
     X_c = X - X.mean(axis=0)
     X_bg_c = X_bg - X_bg.mean(axis=0)
@@ -106,11 +107,11 @@ def gen_cost_ccpca(X_tg, X_bg, alpha=None):
     Cov_all = X_c.T @ X_c / X_c.shape[0]
     Cov_bg = X_bg_c.T @ X_bg_c / X_bg_c.shape[0]
 
-    @pymanopt.function.Autograd
+    @pymanopt.function.autograd(manifold)
     def cost(M):
         return np.trace(M.T @ Cov_bg @ M) / np.trace(M.T @ Cov_all @ M)
 
-    @pymanopt.function.Autograd
+    @pymanopt.function.autograd(manifold)
     def cost_with_alpha(M):
         return np.trace(M.T @ (alpha * Cov_bg - Cov_all) @ M)
 
@@ -120,7 +121,8 @@ def gen_cost_ccpca(X_tg, X_bg, alpha=None):
         return cost
 
 
-def gen_cost_ulca(X,
+def gen_cost_ulca(manifold,
+                  X,
                   y,
                   w_tg,
                   w_bg,
@@ -191,7 +193,7 @@ def gen_cost_ulca(X,
     C0 = Cov_within_tg + Cov_between + gamma0 * np.identity(d)
     C1 = Cov_within_bg + gamma1 * np.identity(d)
 
-    @pymanopt.function.Autograd
+    @pymanopt.function.autograd(manifold)
     def cost(M):
         numerator = 1 if w_bg_total == 0 else np.trace(M.T @ C1 @ M)
         denominator = 1 if (w_tg_total +
@@ -199,7 +201,7 @@ def gen_cost_ulca(X,
 
         return numerator / denominator
 
-    @pymanopt.function.Autograd
+    @pymanopt.function.autograd(manifold)
     def cost_with_alpha(M):
         return np.trace(M.T @ (alpha * C1 - C0) @ M)
 

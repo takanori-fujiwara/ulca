@@ -68,6 +68,7 @@ def gen_ldr(cost_func_generator,
     >>> pca = PCA(n_components=2)
     >>> pca.fit_transform(X)
     """
+
     class LDR:
         """Linear dimensionality reduction class.
         Parameters
@@ -109,6 +110,7 @@ def gen_ldr(cost_func_generator,
         verbosity: int
             Level of information logged.
         """
+
         def __init__(self,
                      n_components=2,
                      max_iter=100,
@@ -140,10 +142,12 @@ def gen_ldr(cost_func_generator,
             -------
             self.
             """
+            manifold = self.manifold_generator(args[0].shape[1],
+                                               self.n_components)
             self.problem = pymanopt.Problem(
-                self.manifold_generator(args[0].shape[1], self.n_components),
-                cost_func_generator(*args, **kwargs))
+                manifold, cost_func_generator(manifold, *args, **kwargs))
             self.problem.verbosity = self.verbosity
+            self.solver._verbosity = self.verbosity
             self.M = self.solver.solve(self.problem)
 
             if self.apply_varimax and self.n_components > 1:
