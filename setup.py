@@ -14,7 +14,7 @@ setup(name='ulca',
       },
       include_package_data=True,
       install_requires=[
-          'autograd', 'ipython', 'numpy', 'scipy', 'pandas',
+          'autograd', 'ipython', 'numpy', 'scipy', 'pandas', 'pymanopt',
           'SimpleWebSocketServer', 'factor-analyzer'
       ],
       py_modules=[

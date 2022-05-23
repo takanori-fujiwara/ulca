@@ -6,7 +6,7 @@ import autograd.numpy as np
 
 import pymanopt
 from pymanopt.manifolds import Stiefel, Grassmann
-from pymanopt.solvers import TrustRegions
+from pymanopt.optimizers import TrustRegions
 
 from factor_analyzer import Rotator
 
@@ -14,8 +14,8 @@ from factor_analyzer import Rotator
 def gen_ldr(cost_func_generator,
             project_func_generator,
             manifold_generator=Grassmann,
-            solver=TrustRegions()):
-    """Linear dimensionality reduction method generator using manifold optimization as a general optimization problem solver.
+            optimizer=TrustRegions()):
+    """Linear dimensionality reduction method generator using manifold optimization as a general optimization problem optimizer.
 
     Parameters
     ----------
@@ -37,11 +37,11 @@ def gen_ldr(cost_func_generator,
         Manifold class used for generating manifold optimization problem.
         Grassman or Stiefel should be used.
         Refer to https://www.pymanopt.org/ for more details.
-    solver: Pymanopt solver class, (default=pymanopt.solvers.TrustRegions())
-        Solver class used for solving manifold optimization problem.
-        In default, pymanopt.solvers.TrustRegions() is used.
-        Other settings and solvers can be used.
-        For example, pymanopt.solvers.SteepestDescent().
+    optimizer: Pymanopt optimizer class, (default=pymanopt.optimizers.TrustRegions())
+        Optimizer class used for solving manifold optimization problem.
+        In default, pymanopt.optimizers.TrustRegions() is used.
+        Other settings and optimizers can be used.
+        For example, pymanopt.optimizers.SteepestDescent().
         Refer to https://www.pymanopt.org/ for more details.
 
     Return
@@ -76,9 +76,9 @@ def gen_ldr(cost_func_generator,
         n_components: int, optional, (default=2)
             Number of componentes to take.
         max_iter: int, optional, (default=100)
-            Maximum number of iterations used by Pymanopt Solver.
+            Maximum number of iterations used by Pymanopt Optimizer.
         convergence_ratio: float, optional (default=1e-2)
-            Convergence ratio ("mingradnorm") used by Pymanopt Solver.
+            Convergence ratio ("mingradnorm") used by Pymanopt Optimizer.
         apply_varimax: bool, optional, (default=True)
             If True, apply varimax rotation to the obtained components
         apply_consist_axes: bool, optional, (default=True)
@@ -87,7 +87,7 @@ def gen_ldr(cost_func_generator,
             Refer to Sec. 4.2.4 in Fujiwara et al., Interactive Dimensionality
             Reduction for Comparative Analysis, 2021
         verbosity: int, optional, (default=0)
-            Level of information logged by the solver while it operates, 0 is
+            Level of information logged by the optimizer while it operates, 0 is
             silent, 2 is most information. Refer to https://www.pymanopt.org/.
         Attributes
         ----------
@@ -99,8 +99,8 @@ def gen_ldr(cost_func_generator,
             Generator of projection function of linear dimensionality reduction.
         manifold_generator: Pymanopt Manifold class
             Manifold class used for generating manifold optimization problem.
-        solver: Pymanopt solver class
-            Solver class used for solving manifold optimization problem.
+        optimizer: Pymanopt Optimizer class
+            Optimizer class used for solving manifold optimization problem.
         M: numpy array, shape(n_features, n_components)
             Projection matrix.
         apply_varimax: bool
@@ -113,7 +113,7 @@ def gen_ldr(cost_func_generator,
 
         def __init__(self,
                      n_components=2,
-                     max_iter=100,
+                     max_iterations=100,
                      convergence_ratio=1e-2,
                      apply_varimax=True,
                      apply_consist_axes=True,
@@ -121,9 +121,9 @@ def gen_ldr(cost_func_generator,
             self.n_components = n_components
             self.cost_func_generator = cost_func_generator
             self.manifold_generator = manifold_generator
-            self.solver = solver
-            self.solver._maxiter = max_iter
-            self.solver._mingradnorm = convergence_ratio
+            self.optimizer = optimizer
+            self.optimizer._max_iterations = max_iterations
+            self.optimizer._min_gradient_norm = convergence_ratio
             self.project_func_generator = project_func_generator
             self.M = None
             self.projector = None
@@ -146,9 +146,8 @@ def gen_ldr(cost_func_generator,
                                                self.n_components)
             self.problem = pymanopt.Problem(
                 manifold, cost_func_generator(manifold, *args, **kwargs))
-            self.problem.verbosity = self.verbosity
-            self.solver._verbosity = self.verbosity
-            self.M = self.solver.solve(self.problem)
+            self.optimizer._verbosity = self.verbosity
+            self.M = self.optimizer.run(self.problem).point
 
             if self.apply_varimax and self.n_components > 1:
                 self.M = Rotator(method='varimax').fit_transform(self.M)

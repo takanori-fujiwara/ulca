@@ -4,7 +4,7 @@ About
 -----
 * ULCA and visual UI that can be directly used from Python and the Jupyter Notebook from: ***Interactive Dimensionality Reduction for Comparative Analysis***.
 Takanori Fujiwara, Xinhai Wei, Jian Zhao, and Kwan-Liu Ma.
-IEEE Transactions on Visualization and Computer Graphics and IEEE VIS 2021 (forthcoming).
+IEEE Transactions on Visualization and Computer Graphics and IEEE VIS 2021.
 [arXiv Preprint](https://arxiv.org/abs/2106.15481)
 
 * Demonstration video: https://takanori-fujiwara.github.io/s/ulca/index.html
@@ -36,20 +36,10 @@ Setup
 -----
 
 ### Requirements
-* Python3 (latest), pymanopt (https://github.com/pymanopt/pymanopt)
+* Python3 (latest)
 * Note: Tested on macOS Big Sur, Ubuntu 20.04 LTS, and Windows 10 with Python 3.9/3.10 and Google Chrome.
 
 ### Setup
-* Install pymanopt from the github repository (<span style="color:#ff8888">DO NOT use pip3 install pymanopt</span>: this pip released ver is quite old.)
-
-  * Download/Clone the repository from https://github.com/pymanopt/pymanopt
-
-  * Move to the downloaded repository, then:
-    `rm pyproject.toml`
-
-    `python3 -m pip install .` or `python -m pip install .`
-
-    * Note: the remove command is used because the installation with pyproject.toml does not work well now.
 
 * Install manopt_dr, ulca, and ulca_ui
 
@@ -72,4 +62,4 @@ Setup
 
 ## How to Cite
 Please, cite:    
-Takanori Fujiwara, Xinhai Wei, Jian Zhao, and Kwan-Liu Ma, "Interactive Dimensionality Reduction for Comparative Analysis". IEEE Transactions on Visualization and Computer Graphics, forthcoming.
+Takanori Fujiwara, Xinhai Wei, Jian Zhao, and Kwan-Liu Ma, "Interactive Dimensionality Reduction for Comparative Analysis". IEEE Transactions on Visualization and Computer Graphics, vol. 28, no. 1, 2022.
