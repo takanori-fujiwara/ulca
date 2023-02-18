@@ -9,7 +9,7 @@ from pathlib import Path
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 from IPython.display import IFrame
-from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
+from simple_websocket_server import WebSocketServer, WebSocket
 from scipy.spatial.distance import pdist
 
 from ulca_ui.utils.weight_opt import optimize_cost
@@ -17,6 +17,7 @@ from ulca_ui.utils.geom_trans import find_best_rotate
 
 
 class Info():
+
     def __init__(self):
         self.verbose = False
         self.dr = None
@@ -133,6 +134,7 @@ class Message(IntEnum):
 
 
 class WsHandler(WebSocket):
+
     def _update_emb(self, content):
         # read from records and take only x and y positions
         Z_prev = np.array(
@@ -332,28 +334,28 @@ class WsHandler(WebSocket):
     def _add_new_component(self, content):
         info.new_comp[content['key']] = content['component']
 
-    def handleMessage(self):
+    def handle(self):
         m = json.loads(self.data)
         m_action = m['action']
 
         if m_action == Message.updateEmb:
-            self.sendMessage(self._update_emb(m['content']))
+            self.send_message(self._update_emb(m['content']))
         elif m_action == Message.optimizeWeights:
-            self.sendMessage(self._optimize_weights(m['content']))
+            self.send_message(self._optimize_weights(m['content']))
         elif m_action == Message.saveResult:
-            self.sendMessage(self._save_result(m['content']))
+            self.send_message(self._save_result(m['content']))
         elif m_action == Message.loadResult:
-            self.sendMessage(self._load_result(m['content']))
+            self.send_message(self._load_result(m['content']))
         elif m_action == Message.addNewComp:
             self._add_new_component(m['content'])
         else:
             if info.verbose:
                 print('received action:', m_action)
 
-    def handleConnected(self):
+    def connected(self):
         if info.verbose:
             print(self.address, 'connected')
-        self.sendMessage(self._initial_load())
+        self.send_message(self._initial_load())
 
     def handleClose(self):
         if info.verbose:
@@ -361,6 +363,7 @@ class WsHandler(WebSocket):
 
 
 class Singleton(object):
+
     def __new__(cls, *args, **kargs):
         if not hasattr(cls, '_instance'):
             cls._instance = super(Singleton, cls).__new__(cls)
@@ -376,6 +379,7 @@ class Plot(Singleton):
     ws_port: int, optional, (default=9000)
         Port used for Websocket server.
     """
+
     def __init__(self, http_port=8000, ws_port=9000):
         # use singleton and the condition below to avoid conflict due to
         # usage of the same html server address
@@ -478,6 +482,7 @@ class Plot(Singleton):
 
         # start html server thread
         class HTTPHandler(SimpleHTTPRequestHandler):
+
             def __init__(self, request, client_address, server):
                 self.directory = Path(__file__).parent
                 super().__init__(request,
@@ -508,8 +513,7 @@ class Plot(Singleton):
         # start websocket server thread
         if self.ws_server is None:
             try:
-                self.ws_server = SimpleWebSocketServer('', self.ws_port,
-                                                       WsHandler)
+                self.ws_server = WebSocketServer('', self.ws_port, WsHandler)
             except:
                 print(
                     'shutdown jupyter kernel using UI before starting to use UI in a new notebook'
@@ -517,7 +521,7 @@ class Plot(Singleton):
                 return
 
             self.ws_server_thread = threading.Thread(
-                target=self.ws_server.serveforever)
+                target=self.ws_server.serve_forever)
             self.ws_server_thread.daemon = True
             self.ws_server_thread.start()
 

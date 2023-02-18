@@ -3,7 +3,7 @@ import os
 from distutils.core import setup
 
 setup(name='ulca',
-      version=0.1,
+      version=0.2,
       packages=[''],
       package_dir={'': '.'},
       package_data={
@@ -15,7 +15,7 @@ setup(name='ulca',
       include_package_data=True,
       install_requires=[
           'autograd', 'ipython', 'numpy', 'scipy', 'pandas', 'pymanopt',
-          'SimpleWebSocketServer', 'factor-analyzer'
+          'simple-websocket-server', 'factor-analyzer'
       ],
       py_modules=[
           'manopt_dr', 'manopt_dr.core', 'manopt_dr.predefined_func_generator',
