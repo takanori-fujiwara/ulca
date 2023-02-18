@@ -58,6 +58,8 @@ Setup
   - Detailed documentations can be found each related source code.
     (e.g., ulca.py: there are documentations about ULCA. plot.py: ULCA's UI)
 
+  - If you cannot see the visualized results, try a hard refresh (e.g., when Mac + Chrome, Ctrl + Shift + R) at the jupyter notebook you are using.
+   
 ******
 
 ## How to Cite
