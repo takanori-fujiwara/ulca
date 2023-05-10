@@ -37,7 +37,7 @@ Setup
 
 ### Requirements
 * Python3 (latest)
-* Note: Tested on macOS Big Sur, Ubuntu 20.04 LTS, and Windows 10 with Python 3.9/3.10 and Google Chrome.
+* Note: Tested on macOS Ventura, Ubuntu 22.0.4 LTS, and Windows 10 with Google Chrome.
 
 ### Setup
 
