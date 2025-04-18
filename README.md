@@ -4,7 +4,7 @@ About
 -----
 * ULCA and visual UI that can be directly used from Python and the Jupyter Notebook from: ***Interactive Dimensionality Reduction for Comparative Analysis***.
 Takanori Fujiwara, Xinhai Wei, Jian Zhao, and Kwan-Liu Ma.
-IEEE Transactions on Visualization and Computer Graphics and IEEE VIS 2021.
+IEEE Transactions on Visualization and Computer Graphics, vol. 28, no. 1, pp. 758-768, 2022 (also, Proc. IEEE VIS 2021).
 [arXiv Preprint](https://arxiv.org/abs/2106.15481)
 
 * Demonstration video: https://takanori-fujiwara.github.io/s/ulca/index.html
@@ -37,7 +37,7 @@ Setup
 
 ### Requirements
 * Python3 (latest)
-* Note: Tested on macOS Ventura, Ubuntu 22.0.4 LTS, and Windows 10 with Google Chrome.
+* Note: Tested on macOS Sequoia, Ubuntu 22.0.4 LTS, and Windows 10 with Google Chrome.
 
 ### Setup
 
