@@ -79,11 +79,10 @@ class EVDULCA:
         Level of information logged by the solver while it operates, 0 is
         silent, the other number is providing information.
     """
-    def __init__(self,
-                 n_components=2,
-                 apply_varimax=False,
-                 apply_consist_axes=True,
-                 verbosity=0):
+
+    def __init__(
+        self, n_components=2, apply_varimax=False, apply_consist_axes=True, verbosity=0
+    ):
         self.n_components = n_components
         self.M = None
         self.alpha = None
@@ -96,21 +95,23 @@ class EVDULCA:
     def _apply_evd(self, C0, C1, alpha):
         C = C0 - alpha * C1
         w, v = linalg.eig(C)
-        return v[:, np.argsort(-np.real(w))[:self.n_components]]
+        return v[:, np.argsort(-np.real(w))[: self.n_components]]
 
-    def fit(self,
-            X,
-            y,
-            w_tg,
-            w_bg,
-            w_bw,
-            Covs={},
-            alpha=None,
-            centering=True,
-            gamma0=None,
-            gamma1=None,
-            convergence_ratio=1e-2,
-            max_iter=100):
+    def fit(
+        self,
+        X,
+        y,
+        w_tg,
+        w_bg,
+        w_bw,
+        Covs={},
+        alpha=None,
+        centering=True,
+        gamma0=None,
+        gamma1=None,
+        convergence_ratio=1e-2,
+        max_iter=100,
+    ):
         """Fit the model with X and other parameters.
         Parameters
         ----------
@@ -221,7 +222,7 @@ class EVDULCA:
                 BW = X_class_mean[y == label, :] - all_mean
                 Cov_within = WI.T @ WI
                 Cov_between = BW.T @ BW
-                _Covs[label] = {'within': Cov_within, 'between': Cov_between}
+                _Covs[label] = {"within": Cov_within, "between": Cov_between}
         else:
             _Covs = Covs
 
@@ -234,9 +235,9 @@ class EVDULCA:
         w_bw_total = 0
 
         for label in labels:
-            Cov_within_tg += w_tg[label] * _Covs[label]['within']
-            Cov_within_bg += w_bg[label] * _Covs[label]['within']
-            Cov_between += w_bw[label] * _Covs[label]['between']
+            Cov_within_tg += w_tg[label] * _Covs[label]["within"]
+            Cov_within_bg += w_bg[label] * _Covs[label]["within"]
+            Cov_between += w_bw[label] * _Covs[label]["between"]
             w_tg_total += w_tg[label]
             w_bg_total += w_bg[label]
             w_bw_total += w_bw[label]
@@ -247,7 +248,7 @@ class EVDULCA:
             else:
                 gamma0 = 0
         if gamma1 is None:
-            if w_bg_total == 0 and gamma1:
+            if w_bg_total == 0:
                 gamma1 = 1
             else:
                 gamma1 = 0
@@ -258,7 +259,7 @@ class EVDULCA:
         if self.alpha:
             self.M = self._apply_evd(C0, C1, self.alpha)
             if self.apply_varimax and self.n_components > 1:
-                self.M = Rotator(method='varimax').fit_transform(self.M)
+                self.M = Rotator(method="varimax").fit_transform(self.M)
         else:
             self.alpha = 0
             self.M = self._apply_evd(C0, C1, self.alpha)
@@ -267,17 +268,18 @@ class EVDULCA:
             for i in range(max_iter):
                 prev_alpha = self.alpha
                 self.alpha = np.trace(self.M.T @ C0 @ self.M) / np.trace(
-                    self.M.T @ C1 @ self.M)
+                    self.M.T @ C1 @ self.M
+                )
                 self.M = self._apply_evd(C0, C1, self.alpha)
 
                 improved_ratio = np.abs(prev_alpha - self.alpha) / self.alpha
                 if self.verbosity > 0:
-                    print(f'alpha: {self.alpha}, improved: {improved_ratio}')
+                    print(f"alpha: {self.alpha}, improved: {improved_ratio}")
                 if improved_ratio < convergence_ratio:
                     break
 
             if self.apply_varimax and self.n_components > 1:
-                self.M = Rotator(method='varimax').fit_transform(self.M)
+                self.M = Rotator(method="varimax").fit_transform(self.M)
             if self.apply_consist_axes:
                 # consist sign (column sum will be pos)
                 self.M = self.M * np.sign(self.M.sum(axis=0))
@@ -303,19 +305,21 @@ class EVDULCA:
         """
         return self.projector(X)
 
-    def fit_transform(self,
-                      X,
-                      y,
-                      w_tg,
-                      w_bg,
-                      w_bw,
-                      Covs={},
-                      alpha=None,
-                      centering=True,
-                      gamma0=0,
-                      gamma1=0,
-                      convergence_ratio=1e-2,
-                      max_iter=100):
+    def fit_transform(
+        self,
+        X,
+        y,
+        w_tg,
+        w_bg,
+        w_bw,
+        Covs={},
+        alpha=None,
+        centering=True,
+        gamma0=0,
+        gamma1=0,
+        convergence_ratio=1e-2,
+        max_iter=100,
+    ):
         """Fit the model with X and apply the dimensionality reduction on X.
         Parameters
         ----------
@@ -378,7 +382,20 @@ class EVDULCA:
         X_new, ndarray of shape (n_samples, n_components)
             Transformed values.
         """
-        return self.fit(locals()).transform(X)
+        return self.fit(
+            X,
+            y=y,
+            w_tg=w_tg,
+            w_bg=w_bg,
+            w_bw=w_bw,
+            Covs=Covs,
+            alpha=alpha,
+            centering=centering,
+            gamma0=gamma0,
+            gamma1=gamma1,
+            convergence_ratio=convergence_ratio,
+            max_iter=max_iter,
+        ).transform(X)
 
     def get_final_cost(self):
         """Obtain objective value/cost obtained after optimization.
